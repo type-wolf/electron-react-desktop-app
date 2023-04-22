@@ -1,0 +1,71 @@
+import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import type { DispatchType } from 'renderer/types/store';
+import { useSelector } from 'renderer/store';
+import Box from 'renderer/components/Box/Box';
+import Button from 'renderer/components/Button/Button';
+import { add } from 'renderer/store/count';
+import type { OpenMessageDialog, OpenMessageDialogReturnValue, OpenFileDialogReturnValue } from 'main/types/Main';
+
+const LoginPage: FC = () => {
+    const [path, setPath] = useState('');
+    const [isStyledClick, setIsStyledClick] = useState(false);
+    const [isCheck, setIsCheck] = useState(false);
+    const [filePath, setFilePath] = useState('');
+    const styledButtonOnClickHandler = () => {
+        /* eslint no-unused-expressions: off */
+        isStyledClick ? setPath('') : setPath('/');
+        setIsStyledClick(!isStyledClick);
+    };
+    const openMessageDialog = async () => {
+        const { asyncFunc } = window.electron.ipcRenderer;
+        const result = await asyncFunc<OpenMessageDialog, OpenMessageDialogReturnValue>('openMessageDialog', {
+            type: 'info',
+            detail: 'Hello! React With Electron!',
+            message: 'StyledComponents With Button OnClick To OpenMessageDialog!',
+            buttons: ['Nice!', 'Bad!'],
+            defaultId: 0,
+            cancelId: 1,
+            checkboxLabel: 'Do Not Display Such Messages In The Future ?',
+        });
+        setIsCheck(result.checkboxChecked);
+    };
+    const openFileDialog = async () => {
+        const { asyncFunc } = window.electron.ipcRenderer;
+        const result = await asyncFunc<void, OpenFileDialogReturnValue>('openFileDialog');
+        result.canceled ? setFilePath('') : setFilePath(result.filePaths[0]);
+    };
+    const dispatch: DispatchType = useDispatch();
+    const count = useSelector((state) => state.count.countState.count);
+    return (
+        <Box styleType="base">
+            <Box styleType="HStack" spacing={5}>
+                <Box styleType="VStack" spacing={5}>
+                    <p>Count: {count}</p>
+                    <Button onClick={() => dispatch(add(count + 1))}>ReduxToolKit</Button>
+                </Box>
+                <Box styleType="VStack" spacing={5}>
+                    <p>JampRootPath: {path}</p>
+                    <Button color="black" background="gray" onClick={styledButtonOnClickHandler}>
+                        <Link to="/">RoutePath</Link>
+                    </Button>
+                </Box>
+            </Box>
+            <Box styleType="HStack" spacing={5}>
+                <Box styleType="VStack" spacing={5}>
+                    <p>{isCheck ? 'Use Checked' : 'Use UnChecked'}</p>
+                    <Button onClick={openMessageDialog}>OpenMessageDialog</Button>
+                </Box>
+                <Box styleType="VStack" spacing={5}>
+                    <p>{filePath ? `Selected File: ${filePath}` : 'Use Cancel'}</p>
+                    <Button color="black" background="gray" onClick={openFileDialog}>
+                        OpenFileDialog
+                    </Button>
+                </Box>
+            </Box>
+        </Box>
+    );
+};
+
+export default LoginPage;
