@@ -1,6 +1,6 @@
 {
     "name": "electron-react-desktop-app",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Desktop application using Electron and React",
     "license": "MIT",
     "author": {

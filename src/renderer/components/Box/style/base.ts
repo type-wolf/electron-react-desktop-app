@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { BoxType } from '../../../types/components/Box';
+import { BaseBoxType } from '../../../types/components/Box';
 import { xs, sm, md, lg, xl } from '../../styled.config';
 
-const BaseBoxStyle = styled.div<BoxType>`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+const BaseBoxStyle = styled.div<BaseBoxType>`
+    width: ${({ width }) => width ?? '200px'};
+    height: ${({ height }) => height ?? '100vh'};
+    display: ${({ display }) => display ?? 'flex'};
+    justify-content: ${({ justifyContent }) => justifyContent ?? 'center'};
+    align-items: ${({ alignItems }) => alignItems ?? 'center'};
     ${xs``}
     ${sm``}
     ${md`

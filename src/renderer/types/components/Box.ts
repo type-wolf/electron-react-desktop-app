@@ -1,30 +1,34 @@
-import { ReactNode } from 'react';
+import { ReactNode, HTMLAttributes } from 'react';
 import { StyledComponent } from 'styled-components';
 import type { CSSProperties } from 'styled-components';
 
 type StyleType = {
-    styleType?: 'base' | 'VStack' | 'HStack';
+    styleType?: 'base' | 'VStack' | 'HStack' | 'Center';
 };
 
 type BasePropsType = {
-    [props: string]: CSSProperties | string | ReactNode;
+    [props: string]: CSSProperties | HTMLAttributes<HTMLDivElement> | string | ReactNode;
     children: ReactNode;
 };
-
-type BaseBoxType = StyleType & BasePropsType;
 
 export type BoxListType = {
     [key: string]: StyledComponent<'div', any, StyleType, never>;
 };
 
-export type NormalBoxType = BaseBoxType;
+export type BaseBoxType = CSSProperties &
+    HTMLAttributes<HTMLDivElement> & {
+        width?: string;
+        height?: string;
+    };
 
 export type VStackType = BaseBoxType & {
-    spacing?: number;
+    spacing?: string;
 };
 
 export type HStackType = BaseBoxType & {
-    spacing?: number;
+    spacing?: string;
 };
 
-export type BoxType = NormalBoxType & VStackType & HStackType;
+export type CenterType = BaseBoxType;
+
+export type BoxType = StyleType & BasePropsType & BaseBoxType & (VStackType | HStackType);

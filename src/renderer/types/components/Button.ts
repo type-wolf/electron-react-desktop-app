@@ -1,24 +1,28 @@
-import { ReactNode, MouseEventHandler } from 'react';
+import { ReactNode, MouseEventHandler, HTMLAttributes } from 'react';
 import { StyledComponent } from 'styled-components';
 import type { CSSProperties } from 'styled-components';
 
 type StyleType = {
-    styleType?: 'base' | 'normal';
+    styleType?: 'base';
 };
 
 type BasePropsType = {
-    [props: string]: CSSProperties | string | ReactNode | MouseEventHandler<HTMLButtonElement>;
+    [props: string]:
+        | CSSProperties
+        | HTMLAttributes<HTMLButtonElement>
+        | string
+        | ReactNode
+        | MouseEventHandler<HTMLButtonElement>;
     children: ReactNode;
 };
-
-export type BaseButtonType = StyleType & BasePropsType;
 
 export type ButtonListType = {
     [key: string]: StyledComponent<'button', any, StyleType, never>;
 };
 
-export type MormalType = BaseButtonType & {
-    background?: string;
-};
+export type BaseButtonType = CSSProperties &
+    HTMLAttributes<HTMLButtonElement> & {
+        hoverBgColor?: string;
+    };
 
-export type ButtonType = BaseButtonType & MormalType;
+export type ButtonType = StyleType & BasePropsType & BaseButtonType;

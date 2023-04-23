@@ -39,25 +39,23 @@ const LoginPage: FC = () => {
     const dispatch: DispatchType = useDispatch();
     const count = useSelector((state) => state.count.countState.count);
     return (
-        <Box styleType="base">
-            <Box styleType="HStack" spacing={5}>
-                <Box styleType="VStack" spacing={5}>
+        <Box styleType="Center" display="flex" width="1200px" height="600px">
+            <Box styleType="HStack" spacing="30px" width="80%" height="80%">
+                <Box styleType="VStack" spacing="5px" width="100%" height="80%">
                     <p>Count: {count}</p>
                     <Button onClick={() => dispatch(add(count + 1))}>ReduxToolKit</Button>
                 </Box>
-                <Box styleType="VStack" spacing={5}>
+                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
                     <p>JampRootPath: {path}</p>
-                    <Button color="black" background="gray" onClick={styledButtonOnClickHandler}>
+                    <Button onClick={styledButtonOnClickHandler}>
                         <Link to="/">RoutePath</Link>
                     </Button>
                 </Box>
-            </Box>
-            <Box styleType="HStack" spacing={5}>
-                <Box styleType="VStack" spacing={5}>
+                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
                     <p>{isCheck ? 'Use Checked' : 'Use UnChecked'}</p>
                     <Button onClick={openMessageDialog}>OpenMessageDialog</Button>
                 </Box>
-                <Box styleType="VStack" spacing={5}>
+                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
                     <p>{filePath ? `Selected File: ${filePath}` : 'Use Cancel'}</p>
                     <Button color="black" background="gray" onClick={openFileDialog}>
                         OpenFileDialog
