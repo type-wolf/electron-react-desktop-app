@@ -8,7 +8,6 @@ const HStack = styled(BaseBoxStyle)<HStackType>`
     height: ${({ height }) => height ?? '100%'};
     display: flex;
     flex-direction: row;
-    align-items: center;
     & > *:not(:last-child) {
         margin-right: ${({ spacing }) => spacing ?? '0.5rem'};
     }

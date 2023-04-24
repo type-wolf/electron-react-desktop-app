@@ -1,3 +1,7 @@
+# 0.1.4
+
+-   Fix VStack and HStack properties
+
 # 0.1.3
 
 -   Fix Input type

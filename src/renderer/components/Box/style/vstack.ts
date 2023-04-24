@@ -8,8 +8,6 @@ const VStack = styled(BaseBoxStyle)<VStackType>`
     height: ${({ height }) => height ?? '100%'};
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     & > * {
         margin-bottom: ${({ spacing }) => spacing ?? '1rem'};
     }
