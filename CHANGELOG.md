@@ -1,3 +1,7 @@
+# 0.1.3
+
+-   Fix Input type
+
 # 0.1.2
 
 -   Create TextInput Components With Styled-Components

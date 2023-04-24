@@ -1,4 +1,4 @@
-import { ReactNode, HTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes } from 'react';
 import { StyledComponent } from 'styled-components';
 import type { CSSProperties } from 'styled-components';
 

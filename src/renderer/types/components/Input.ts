@@ -1,4 +1,4 @@
-import { ReactNode, MouseEventHandler, HTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes, FormEventHandler } from 'react';
 import { StyledComponent } from 'styled-components';
 import type { CSSProperties } from 'styled-components';
 
@@ -7,7 +7,7 @@ type StyleType = {
 };
 
 type BasePropsType = {
-    [props: string]: CSSProperties | HTMLAttributes<HTMLInputElement> | string | ReactNode | MouseEventHandler<HTMLInputElement>;
+    [props: string]: CSSProperties | HTMLAttributes<HTMLInputElement> | string | ReactNode | FormEventHandler<HTMLInputElement>;
     children?: ReactNode;
 };
 
