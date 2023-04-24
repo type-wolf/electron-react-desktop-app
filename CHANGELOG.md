@@ -1,3 +1,7 @@
+# 0.2.4
+
+-   Create TextComponents With Span tag
+
 # 0.1.4
 
 -   Fix VStack and HStack properties

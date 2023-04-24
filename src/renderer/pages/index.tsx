@@ -8,6 +8,7 @@ import Button from 'renderer/components/Button/Button';
 import { add } from 'renderer/store/count';
 import type { OpenMessageDialog, OpenMessageDialogReturnValue, OpenFileDialogReturnValue } from 'main/types/Main';
 import Input from 'renderer/components/Input/Input';
+import Text from 'renderer/components/Text/Text';
 
 const LoginPage: FC = () => {
     const [path, setPath] = useState('');
@@ -43,27 +44,27 @@ const LoginPage: FC = () => {
         <Box styleType="Center" display="flex" width="1200px" height="600px">
             <Box styleType="HStack" spacing="30px" width="80%" height="80%">
                 <Box styleType="VStack" spacing="5px" width="100%" height="80%">
-                    <p>Count: {count}</p>
+                    <Text>Count: {count}</Text>
                     <Button onClick={() => dispatch(add(count + 1))}>ReduxToolKit</Button>
                 </Box>
                 <Box styleType="VStack" spacing="5px" width="80%" height="80%">
-                    <p>JampRootPath: {path}</p>
+                    <Text>JampRootPath: {path}</Text>
                     <Button onClick={styledButtonOnClickHandler}>
                         <Link to="/">RoutePath</Link>
                     </Button>
                 </Box>
                 <Box styleType="VStack" spacing="5px" width="80%" height="80%">
-                    <p>{isCheck ? 'Use Checked' : 'Use UnChecked'}</p>
+                    <Text>{isCheck ? 'Use Checked' : 'Use UnChecked'}</Text>
                     <Button onClick={openMessageDialog}>OpenMessageDialog</Button>
                 </Box>
                 <Box styleType="VStack" spacing="5px" width="80%" height="80%">
-                    <p>{filePath ? `Selected File: ${filePath}` : 'Use Cancel'}</p>
+                    <Text>{filePath ? `Selected File: ${filePath}` : 'Use Cancel'}</Text>
                     <Button color="black" background="gray" onClick={openFileDialog}>
                         OpenFileDialog
                     </Button>
                 </Box>
                 <Box styleType="VStack" spacing="5px" width="80%" height="80%">
-                    <p>Text Input</p>
+                    <Text>Text Input</Text>
                     <Input />
                 </Box>
             </Box>
