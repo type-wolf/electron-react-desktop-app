@@ -7,6 +7,7 @@ import Box from 'renderer/components/Box/Box';
 import Button from 'renderer/components/Button/Button';
 import { add } from 'renderer/store/count';
 import type { OpenMessageDialog, OpenMessageDialogReturnValue, OpenFileDialogReturnValue } from 'main/types/Main';
+import Input from 'renderer/components/Input/Input';
 
 const LoginPage: FC = () => {
     const [path, setPath] = useState('');
@@ -60,6 +61,10 @@ const LoginPage: FC = () => {
                     <Button color="black" background="gray" onClick={openFileDialog}>
                         OpenFileDialog
                     </Button>
+                </Box>
+                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
+                    <p>Text Input</p>
+                    <Input />
                 </Box>
             </Box>
         </Box>

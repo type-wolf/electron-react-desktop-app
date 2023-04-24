@@ -1,3 +1,7 @@
+# 0.1.2
+
+-   Create TextInput Components With Styled-Components
+
 # 0.0.2
 
 -   Changed Styled-Components to inherit each style from the base.
