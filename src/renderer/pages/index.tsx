@@ -41,29 +41,29 @@ const LoginPage: FC = () => {
     const dispatch: DispatchType = useDispatch();
     const count = useSelector((state) => state.count.countState.count);
     return (
-        <Box styleType="Center" display="flex" width="1200px" height="600px">
-            <Box styleType="HStack" spacing="30px" width="80%" height="80%">
-                <Box styleType="VStack" spacing="5px" width="100%" height="80%">
+        <Box styleType="ShadowCenter" display="flex" width="1200px" height="600px">
+            <Box styleType="HStack">
+                <Box styleType="VStack" spacing="5px">
                     <Text>Count: {count}</Text>
                     <Button onClick={() => dispatch(add(count + 1))}>ReduxToolKit</Button>
                 </Box>
-                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
+                <Box styleType="VStack" spacing="5px">
                     <Text>JampRootPath: {path}</Text>
                     <Button onClick={styledButtonOnClickHandler}>
                         <Link to="/">RoutePath</Link>
                     </Button>
                 </Box>
-                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
+                <Box styleType="VStack" spacing="5px">
                     <Text>{isCheck ? 'Use Checked' : 'Use UnChecked'}</Text>
                     <Button onClick={openMessageDialog}>OpenMessageDialog</Button>
                 </Box>
-                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
+                <Box styleType="VStack" spacing="5px">
                     <Text>{filePath ? `Selected File: ${filePath}` : 'Use Cancel'}</Text>
                     <Button color="black" background="gray" onClick={openFileDialog}>
                         OpenFileDialog
                     </Button>
                 </Box>
-                <Box styleType="VStack" spacing="5px" width="80%" height="80%">
+                <Box styleType="VStack" spacing="5px">
                     <Text>Text Input</Text>
                     <Input />
                 </Box>

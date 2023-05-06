@@ -1,24 +1,20 @@
 import styled from 'styled-components';
 import type { CenterType } from 'renderer/types/components/Box';
-import { xs, sm, md, lg, xl } from '../../styled.config';
 import BaseBoxStyle from './base';
 
 const Center = styled(BaseBoxStyle)<CenterType>`
-    width: ${({ width }) => width ?? '100%'};
-    height: ${({ height }) => height ?? '100%'};
+    width: ${({ theme, width }) => width ?? theme.sizes.box.md};
+    height: ${({ theme, height }) => height ?? theme.sizes.box.md};
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    ${xs``};
-    ${sm``};
-    ${md`
-
-    `};
-    ${lg``};
-    ${xl``};
+    box-shadow: ${({ theme, boxShadow }) => boxShadow ?? theme.shadow.none};
+    ${({ theme }) => theme.breakpoint.xs``};
+    ${({ theme }) => theme.breakpoint.sm``};
+    ${({ theme }) => theme.breakpoint.md``};
+    ${({ theme }) => theme.breakpoint.lg``};
+    ${({ theme }) => theme.breakpoint.xl``};
 `;
 
 export default Center;

@@ -3,7 +3,7 @@ import { StyledComponent } from 'styled-components';
 import type { CSSProperties } from 'styled-components';
 
 type StyleType = {
-    styleType?: 'base';
+    styleType?: 'base' | 'Header' | 'Label' | 'Error';
 };
 
 type BasePropsType = {
@@ -22,4 +22,14 @@ export type BaseTextType = CSSProperties &
         fontWeight?: number;
     };
 
-export type TextType = StyleType & BasePropsType & BaseTextType;
+export type HeaderType = BaseTextType & {
+    marginTop?: string;
+};
+
+export type LabelType = BaseTextType & {
+    marginButtom: string;
+};
+
+export type ErrorType = LabelType;
+
+export type TextType = StyleType & BasePropsType & BaseTextType & (HeaderType | LabelType | ErrorType);

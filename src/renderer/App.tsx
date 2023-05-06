@@ -1,16 +1,20 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
+import theme from './components/config/theme';
 import store from './store/index';
 import LoginPage from './pages';
 
 export default function App() {
     return (
         <Provider store={store}>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<LoginPage />} />
-                </Routes>
-            </Router>
+            <ThemeProvider theme={theme}>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<LoginPage />} />
+                    </Routes>
+                </Router>
+            </ThemeProvider>
         </Provider>
     );
 }

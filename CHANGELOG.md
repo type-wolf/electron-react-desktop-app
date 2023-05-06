@@ -1,3 +1,7 @@
+# 0.3.4
+
+- Create Theme Files And Components Refactoring
+
 # 0.2.4
 
 -   Create TextComponents With Span tag

@@ -3,7 +3,7 @@ import { StyledComponent } from 'styled-components';
 import type { CSSProperties } from 'styled-components';
 
 type StyleType = {
-    styleType?: 'base';
+    styleType?: 'base' | 'Primary' | 'Loading' | 'SideMenu';
 };
 
 type BasePropsType = {
@@ -23,6 +23,19 @@ export type ButtonListType = {
 export type BaseButtonType = CSSProperties &
     HTMLAttributes<HTMLButtonElement> & {
         hoverBgColor?: string;
+        disabledBackgroundColor?: string;
+        disabledColor?: string;
+        disabledCursor?: string;
     };
 
-export type ButtonType = StyleType & BasePropsType & BaseButtonType;
+export type LoadingType = BaseButtonType & {
+    loading?: boolean;
+};
+
+export type PrimaryType = BaseButtonType;
+
+export type SideMenuType = BaseButtonType & {
+    isOpen: boolean;
+};
+
+export type ButtonType = StyleType & BasePropsType & (LoadingType | PrimaryType | SideMenuType);
