@@ -1,6 +1,11 @@
+# 0.3.5
+
+-   Release of MacOS code signing functionality
+-   Delete EnvTextValue
+
 # 0.3.4
 
-- Create Theme Files And Components Refactoring
+-   Create Theme Files And Components Refactoring
 
 # 0.2.4
 

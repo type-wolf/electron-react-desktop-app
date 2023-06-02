@@ -64,13 +64,11 @@ console.log(process.env.MONGODB_URI);
 
 ### Set CSC_LINK
 
-#### GitHub Secret Add: file://envValue.txt
-
-```txt
-base64 -i certificate.p12 -o envValue.txt
+```bash
+base64 -i certificate.p12
 ```
 
-### Set CSC_KEY_PASSWORD
+### Set `certificate.p12` CSC_KEY_PASSWORD
 
 #### GitHub Secret Add: Password Used To Export The xxx.p12 file
 

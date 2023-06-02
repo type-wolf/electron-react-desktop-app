@@ -177,7 +177,7 @@
     },
     "build": {
         "productName": "ElectronReact",
-        "appId": "org.erb.ElectronReact",
+        "appId": "com.Rui.Electron.React.Desktop.App",
         "asar": true,
         "asarUnpack": "**\\*.{node,dll}",
         "files": [
