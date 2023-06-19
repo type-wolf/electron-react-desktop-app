@@ -1,86 +1,202 @@
-## Quick Start
+## Electron React Desktop App
 
-### Seting Project
-
-#### package.json
+### Edit RootDir in [packege.json](packge.json)
 
 ```json
-
+{
+    "description": "Your App Description",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/{AuthorName}/{RepositoryName}.git"
+    },
+    "author": {
+        "name": "AuthorName"
+    },
+    "build": {
+        "productName": "ProductName",
+        "appId": "ID created with AppleDeveloper"
+    },
+    "publish": {
+        "provider": "github",
+        "owner": "AuthorName",
+        "repo": "RepositoryName"
+    }
+}
 ```
 
-### Install
+### Edit ReleseDir in [packge.json](release/app/packge.json)
 
-```bash
-npm install
+```json
+{
+    "name": "RepositoryName",
+    "version": "0.1.0",
+    "description": "Your App Description",
+    "license": "MIT",
+    "author": {
+        "name": "AuthorName"
+    }
+}
 ```
 
-### Build
+### QuickStart
 
-```bash
-npm run build
-```
+1. #### Install
 
-### Start
+    ```bash
+    npm install
+    ```
 
-```bash
-npm start
-```
+2. #### Build
 
-## Env Registration
+    ```bash
+    npm run build
+    ```
 
-### Create .env
+3. #### Start
 
-```bash
-touch .env
-```
+    ```bash
+    npm start
+    ```
 
-### MongoDB
+### Env Registration
 
-### .env
+-   #### Create .env
 
-```bash
-echo "MONGODB_URI=My MongoDB URI" > .env
-```
+    ```bash
+    touch .env
+    ```
 
-### .erb/configs/webpack.config.main.prod.ts
+-   #### MongoDB
 
-```typescript
-new webpack.DefinePlugin({
-    'process.type': '"browser"',
-    'process.env.MONGODB_URI': JSON.stringify(process.env.MONGODB_URI),
-    'process.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN),
-}),
-```
+    ```bash
+    echo "MONGODB_URI=My MongoDB URI" > .env
+    ```
 
-#### Read .env DevMode
+-   #### Edit [prod.ts](.erb/configs/webpack.config.main.prod.ts)
 
-```typescript
-import { config } from 'dotenv';
-config();
-console.log(process.env.MONGODB_URI);
-```
+    ```typescript
+    new webpack.DefinePlugin({
+        'process.type': '"browser"',
+        'process.env.MONGODB_URI': JSON.stringify(process.env.MONGODB_URI),
+        'process.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN),
+    }),
+    ```
 
-## Packege
+-   #### Read .env DevMode
 
-### Set CSC_LINK
+    ```typescript
+    import { config } from 'dotenv';
+    config();
+    console.log(process.env.MONGODB_URI);
+    ```
 
-```bash
-base64 -i certificate.p12
-```
+### Application Packaging
 
-### Set `certificate.p12` CSC_KEY_PASSWORD
+1. #### Create DevelopmentID
 
-#### GitHub Secret Add: Password Used To Export The xxx.p12 file
+    - #### Sign up for the AppleDeveloperProgram ($100 per year)
 
-### Set GH_TOKEN
+    - #### Create a DevelopID from Xcode
 
-#### Set environment variables in github
+2. #### Create [DeveloperApplicationID](https://developer.apple.com/account/resources/certificates/add)
 
-### .env
+    - #### Software => Developer ID Application
 
-```txt
-process.env.GH_TOKEN = GH_TOKEN
-```
+    - #### Select a Developer ID Certificate Intermediary => Previous Sub-CA
+
+    - #### Choose File => DeveloperID file (.p12) created in Xcode
+
+    - #### Download and Launch
+
+3. #### Create [Developer InstallerID](https://developer.apple.com/account/resources/certificates/add)
+
+    - #### Software => Developer ID Installer
+
+    - #### Select a Developer ID Certificate Intermediary => Previous Sub-CA
+
+    - #### Choose File => DeveloperID file (.p12) created in Xcode
+
+    - #### Download and Launch
+
+4. #### Create [AppID](https://developer.apple.com/account/resources/identifiers/list)
+
+    - #### Register a new identifier => App IDs
+
+    - #### Select a type => App
+
+    - #### Description => Description of App ID
+
+    - #### App ID Prefix => ID of any application (com.{SecondName}.{AppName0}.{AppName2})
+
+5. #### Create [Profile](https://developer.apple.com/account/resources/profiles/add)
+
+    - #### Register a New Provisioning Profile => macOS App Development
+
+    - #### Profile Type => macOS
+
+    - #### AppID => The ID you just created
+
+    - #### Download and Launch
+
+6. #### Register `APPLE_ID` in Github environment variable
+
+7. #### Register `APPLE_ID_PASS` in Github enviroment variable
+
+    - #### Create [AppleIDPassword](https://appleid.apple.com/account/manage)
+
+    - #### Select Password for App
+
+8. #### Hash the `certificate.p12` file issued by the keychain and register it in the Guthub environment variable with `CSC_LINK`.
+
+    - #### Issue a certificate with `.p12` extension for the `Developer InstallerID` you just created in your keychain
+
+        ```bash
+        openssl sha1 certificate.p12
+        ```
+
+    - #### Register output results to Github environment variables
+
+9. #### Register the password for `certificate.p12` set in the keychain with `CSC_KEY_PASSWORD` in the Github environment variable
+
+    - #### Register the password you decided when issuing the certificate (p.12) file in the Github environment variable.
+
+10. #### Issue a new access token in Github and register it with the Github environment variable `GH_TOKEN`
+
+11. #### Register for `.env`
+
+    ```txt
+    process.env.GH_TOKEN = GH_TOKEN
+    ```
+
+### AutoUpdate
+
+-   #### Edit [appUpdater.ts](src/main/event/appUpdater.ts)
+
+    -   #### When done in a private repository
+
+        ```typescript
+        autoUpdater.setFeedURL({
+            provider: 'github',
+            owner: 'AuthorName',
+            repo: 'RepositoryName',
+            private: true,
+            token: process.env.GH_TOKEN as string, // Repo Scope Permission
+        });
+        ```
+
+        ```bash
+        echo "GH_TOKEN=GH_TOKEN" > .env
+        ```
+
+    -   #### When done in public
+
+        ```typescript
+        autoUpdater.setFeedURL({
+            provider: 'github',
+            owner: 'AuthorName',
+            repo: 'RepositoryName',
+        });
+        ```
 
 ## Reference
 
