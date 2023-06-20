@@ -1,9 +1,27 @@
-import { dialog } from 'electron';
+/* eslint lines-between-class-members: off */
+
+import type { BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import type { SendStatusToRendererType } from '../types/Events/AppUpdater';
 
 export default class AppUpdater {
-    constructor() {
+    private window: BrowserWindow;
+    constructor(window: BrowserWindow) {
+        this.window = window;
+        const sendStatusToRenderer = (datas: SendStatusToRendererType) => {
+            this.window.webContents.send('appUpdaterMessage', datas);
+        };
+        this.window.webContents.once('did-finish-load', () => {
+            sendStatusToRenderer({ status: 'checking-for-update', data: 'Checking For Update...' });
+        });
+        if (process.env.NODE_ENV === 'development') {
+            sendStatusToRenderer({ status: 'checking-for-update', data: 'Skip confirmation of update' });
+            setTimeout(() => {
+                this.window.hide();
+                this.window.destroy();
+            }, 5000);
+        }
         log.transports.file.level = 'info';
         autoUpdater.logger = log;
         autoUpdater.setFeedURL({
@@ -15,28 +33,27 @@ export default class AppUpdater {
         });
         autoUpdater.checkForUpdates();
         autoUpdater.on('checking-for-update', () => {
-            log.info(process.pid, 'checking-for-update...');
+            sendStatusToRenderer({ status: 'checking-for-update', data: 'Checking for update...' });
         });
-        autoUpdater.on('update-available', () => {
-            log.info(process.pid, 'Update available.');
+        autoUpdater.on('update-available', (info) => {
+            sendStatusToRenderer({ status: 'update-available', data: info.version });
         });
         autoUpdater.on('update-not-available', () => {
-            log.info(process.pid, 'Update not available.');
+            sendStatusToRenderer({ status: 'update-not-available', data: 'Starting...' });
+            setTimeout(() => {
+                this.window.hide();
+                this.window.destroy();
+            }, 5000);
         });
-        autoUpdater.on('update-downloaded', async () => {
-            const dialogOpts = {
-                type: 'info',
-                buttons: ['更新して再起動', 'あとで更新する'],
-                message: '新しいバージョンがあります',
-                detail: '新バージョンをダウンロードしました。\n\n再起動して更新を適用しますか？',
-            };
-            const { response } = await dialog.showMessageBox(dialogOpts);
-            if (response === 0) {
-                autoUpdater.quitAndInstall();
-            }
+        autoUpdater.on('download-progress', (info) => {
+            sendStatusToRenderer({ status: 'download-progress', data: info.percent });
+        });
+        autoUpdater.on('update-downloaded', () => {
+            sendStatusToRenderer({ status: 'update-downloaded', data: 'Download Complete !' });
+            autoUpdater.quitAndInstall();
         });
         autoUpdater.on('error', (err) => {
-            log.error(process.pid, err);
+            sendStatusToRenderer({ status: 'error', data: err.message });
         });
     }
 }
