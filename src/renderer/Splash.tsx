@@ -1,21 +1,17 @@
-import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { SendStatusToRendererType } from 'main/types/Events/AppUpdater';
-import GlobalStyle from './components/config/globalStyle';
-
-const Header = () => {
-    const [data, setData] = useState<string | number>();
-    window.electron.ipcRenderer.on('appUpdaterMessage', (datas: SendStatusToRendererType) => {
-        setData(datas.data);
-    });
-    return <h3>{data}</h3>;
-};
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle, RvVStack, theme } from 'rvi-system';
+import SpalashHeaderText from './components/Splash/HeaderText';
+import Progress from './components/Splash/Progress';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 root.render(
-    <>
+    <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Header />
-    </>
+        <RvVStack height="100vh">
+            <SpalashHeaderText />
+            <Progress />
+        </RvVStack>
+    </ThemeProvider>
 );

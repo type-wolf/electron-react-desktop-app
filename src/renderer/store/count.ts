@@ -16,10 +16,10 @@ const count = createSlice({
             state.countState = countState;
         },
         add(state, { payload }: Add) {
-            state.countState.count = payload;
+            state.countState.count += payload;
         },
         minus(state, { payload }: Minus) {
-            state.countState.count = payload;
+            state.countState.count -= payload;
         },
     },
 });

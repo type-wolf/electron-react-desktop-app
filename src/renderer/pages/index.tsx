@@ -1,25 +1,35 @@
+/* eslint no-unused-expressions: off */
+
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import type { DispatchType } from 'renderer/types/store';
 import { useSelector } from 'renderer/store';
-import Box from 'renderer/components/Box/Box';
-import Button from 'renderer/components/Button/Button';
-import { add } from 'renderer/store/count';
+import { useDispatch } from 'react-redux';
+import { DispatchType } from 'renderer/types/store';
 import type { OpenMessageDialog, OpenMessageDialogReturnValue, OpenFileDialogReturnValue } from 'main/types/Main';
-import Input from 'renderer/components/Input/Input';
-import Text from 'renderer/components/Text/Text';
+import { add, asyncAdd, minus } from 'renderer/store/count';
+import {
+    RvButton,
+    RvInput,
+    RvHStack,
+    RvSidebarContainer,
+    RvSidebar,
+    RvStatHeader,
+    RvMenu,
+    RvMenuItem,
+    RvMain,
+    RvRow,
+    RvColumn,
+    RvStat,
+    RvSidebarHeader,
+    RvSubMenu,
+    RvSpan,
+} from 'rvi-system';
 
 const LoginPage: FC = () => {
-    const [path, setPath] = useState('');
-    const [isStyledClick, setIsStyledClick] = useState(false);
-    const [isCheck, setIsCheck] = useState(false);
     const [filePath, setFilePath] = useState('');
-    const styledButtonOnClickHandler = () => {
-        /* eslint no-unused-expressions: off */
-        isStyledClick ? setPath('') : setPath('/');
-        setIsStyledClick(!isStyledClick);
-    };
+    const [isCheck, setIsCheck] = useState<boolean>(false);
+    const count = useSelector((state) => state.count.countState.count);
+    const dispatch: DispatchType = useDispatch();
+
     const openMessageDialog = async () => {
         const { asyncFunc } = window.electron.ipcRenderer;
         const result = await asyncFunc<OpenMessageDialog, OpenMessageDialogReturnValue>('openMessageDialog', {
@@ -33,42 +43,92 @@ const LoginPage: FC = () => {
         });
         setIsCheck(result.checkboxChecked);
     };
+
     const openFileDialog = async () => {
         const { asyncFunc } = window.electron.ipcRenderer;
         const result = await asyncFunc<void, OpenFileDialogReturnValue>('openFileDialog');
         result.canceled ? setFilePath('') : setFilePath(result.filePaths[0]);
     };
-    const dispatch: DispatchType = useDispatch();
-    const count = useSelector((state) => state.count.countState.count);
+
     return (
-        <Box styleType="ShadowCenter" display="flex" width="1200px" height="600px">
-            <Box styleType="HStack">
-                <Box styleType="VStack" spacing="5px">
-                    <Text>Count: {count}</Text>
-                    <Button onClick={() => dispatch(add(count + 1))}>ReduxToolKit</Button>
-                </Box>
-                <Box styleType="VStack" spacing="5px">
-                    <Text>JampRootPath: {path}</Text>
-                    <Button onClick={styledButtonOnClickHandler}>
-                        <Link to="/">RoutePath</Link>
-                    </Button>
-                </Box>
-                <Box styleType="VStack" spacing="5px">
-                    <Text>{isCheck ? 'Use Checked' : 'Use UnChecked'}</Text>
-                    <Button onClick={openMessageDialog}>OpenMessageDialog</Button>
-                </Box>
-                <Box styleType="VStack" spacing="5px">
-                    <Text>{filePath ? `Selected File: ${filePath}` : 'Use Cancel'}</Text>
-                    <Button color="black" background="gray" onClick={openFileDialog}>
-                        OpenFileDialog
-                    </Button>
-                </Box>
-                <Box styleType="VStack" spacing="5px">
-                    <Text>Text Input</Text>
-                    <Input />
-                </Box>
-            </Box>
-        </Box>
+        <RvHStack width="100%" height="100%" justifyContent="start" flexWrap="nowrap" alignItems="center" bgColor="black700">
+            <RvSidebarContainer>
+                <RvSidebarHeader>Electron React</RvSidebarHeader>
+                <RvSidebar>
+                    <RvMenu>
+                        <RvSubMenu label="Store">
+                            <RvMenuItem onClick={() => dispatch(add(1))}>Add Store</RvMenuItem>
+                            <RvMenuItem onClick={() => dispatch(minus(1))}>Minus Store</RvMenuItem>
+                        </RvSubMenu>
+                        <RvMenuItem>MenuItem3</RvMenuItem>
+                        <RvMenuItem>MenuItem4</RvMenuItem>
+                        <RvMenuItem>MenuItem5</RvMenuItem>
+                        <RvSubMenu label="SubMenu2">
+                            <RvMenuItem>MenuItem6</RvMenuItem>
+                            <RvMenuItem>MenuItem7</RvMenuItem>
+                        </RvSubMenu>
+                        <RvSubMenu label="SubMenu3">
+                            <RvMenuItem>MenuItem8</RvMenuItem>
+                        </RvSubMenu>
+                        <RvSubMenu label="SubMenu4">
+                            <RvMenuItem>MenuItem9</RvMenuItem>
+                            <RvMenuItem>MenuItem10</RvMenuItem>
+                        </RvSubMenu>
+                    </RvMenu>
+                </RvSidebar>
+            </RvSidebarContainer>
+            <RvMain width="100%">
+                <RvRow justifyContent="start" flexWrap="nowrap">
+                    <RvHStack width="100%" height="20%" justifyContent="space-between" flexWrap="nowrap">
+                        <RvSpan marginLeft={10} fontSize="20px">
+                            Dashboard
+                        </RvSpan>
+                        <RvButton>Button1</RvButton>
+                        <RvInput width="300px" marginRight={10} bgColor="black600" placeholder="Search" />
+                    </RvHStack>
+                    <RvColumn>
+                        <RvStat>
+                            <RvStatHeader marginTop={5}>{`Count: ${count}`}</RvStatHeader>
+                            <RvButton onClick={() => dispatch(add(1))}>Add</RvButton>
+                            <RvButton onClick={() => dispatch(minus(1))}>Minus</RvButton>
+                            <RvButton width="auto" onClick={() => dispatch(asyncAdd({ payload: 1 }))}>
+                                Async Add
+                            </RvButton>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader marginTop={5}>{`${isCheck ? 'isCheck: True' : 'isCheck: False'}`}</RvStatHeader>
+                            <RvButton width="80%" onClick={openMessageDialog}>
+                                Open Message Dialog
+                            </RvButton>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader marginTop={5}>{`SelectFilePath: ${filePath}`}</RvStatHeader>
+                            <RvButton width="80%" onClick={openFileDialog}>
+                                Open File Dialog
+                            </RvButton>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader>Stat4</RvStatHeader>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader>Stat5</RvStatHeader>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader>Stat6</RvStatHeader>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader>Stat7</RvStatHeader>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader>Stat8</RvStatHeader>
+                        </RvStat>
+                        <RvStat>
+                            <RvStatHeader>Stat9</RvStatHeader>
+                        </RvStat>
+                    </RvColumn>
+                </RvRow>
+            </RvMain>
+        </RvHStack>
     );
 };
 

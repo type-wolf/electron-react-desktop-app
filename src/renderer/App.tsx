@@ -1,7 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
-import theme from './components/config/theme';
+import { theme } from 'rvi-system';
 import store from './store/index';
 import LoginPage from './pages';
 
