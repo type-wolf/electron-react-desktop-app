@@ -1,7 +1,6 @@
 /* eslint no-unused-expressions: off */
 
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'renderer/store';
 import { useDispatch } from 'react-redux';
 import { DispatchType } from 'renderer/types/store';
