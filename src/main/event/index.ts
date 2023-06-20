@@ -5,6 +5,7 @@ import MenuBuilder from '../menus';
 import resolveHtmlPath from '../utils/resolveHtmlPath';
 import installExtensions from './installExtensions';
 import createMainWindow from './createWindow';
+import createSplashWindow from './createSplashWindow';
 import readyToShow from './readyToShow';
 import close from './close';
 
@@ -17,9 +18,7 @@ const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD
 
 if (isDebug) require('electron-debug')();
 
-export default async () => {
-    if (isDebug) await installExtensions();
-
+export const mainWindowReady = async () => {
     const mainWindow = createMainWindow();
 
     mainWindow.loadURL(resolveHtmlPath('index.html'));
@@ -38,8 +37,27 @@ export default async () => {
         return { action: 'deny' };
     });
 
-    // eslint-disable-next-line
-    new AppUpdater();
-
     return mainWindow;
+};
+
+export const splashWindowReady = async () => {
+    if (isDebug) await installExtensions();
+
+    const splashWindow = createSplashWindow();
+
+    splashWindow.loadURL(resolveHtmlPath('Splash.html'));
+
+    splashWindow.on('ready-to-show', () => readyToShow(splashWindow));
+
+    splashWindow.once('close', () => close(splashWindow));
+
+    splashWindow.webContents.setWindowOpenHandler((edata) => {
+        shell.openExternal(edata.url);
+        return { action: 'deny' };
+    });
+
+    // eslint-disable-next-line
+    new AppUpdater(splashWindow);
+
+    return splashWindow;
 };
