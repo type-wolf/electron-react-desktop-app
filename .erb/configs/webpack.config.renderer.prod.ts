@@ -25,12 +25,18 @@ const configuration: webpack.Configuration = {
 
     target: ['web', 'electron-renderer'],
 
-    entry: [path.join(webpackPaths.srcRendererPath, 'index.tsx')],
+    // entry: [path.join(webpackPaths.srcRendererPath, 'index.tsx')],
+
+    entry: {
+        main: [path.join(webpackPaths.srcRendererPath, 'index.tsx')],
+        splash: [path.join(webpackPaths.srcRendererPath, 'Splash.tsx')],
+    },
 
     output: {
         path: webpackPaths.distRendererPath,
         publicPath: './',
-        filename: 'renderer.js',
+        // filename: 'renderer.js',
+        filename: '[name].js',
         library: {
             type: 'umd',
         },
@@ -135,6 +141,20 @@ const configuration: webpack.Configuration = {
             },
             isBrowser: false,
             isDevelopment: process.env.NODE_ENV !== 'production',
+            chunks: ['main'],
+        }),
+
+        new HtmlWebpackPlugin({
+            filename: path.join('Splash.html'),
+            template: path.join(webpackPaths.srcRendererPath, 'Splash.ejs'),
+            minify: {
+                collapseWhitespace: true,
+                removeAttributeQuotes: true,
+                removeComments: true,
+            },
+            isBrowser: false,
+            isDevelopment: process.env.NODE_ENV !== 'production',
+            chunks: ['splash'],
         }),
 
         new webpack.DefinePlugin({
