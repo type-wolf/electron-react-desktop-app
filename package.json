@@ -158,6 +158,7 @@
         "react-test-renderer": "^18.2.0",
         "redux": "^4.2.0",
         "rimraf": "^4.1.2",
+        "rvi-system": "^0.8.25",
         "sass": "^1.58.0",
         "sass-loader": "^13.2.0",
         "style-loader": "^3.3.1",
