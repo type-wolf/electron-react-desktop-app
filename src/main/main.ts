@@ -1,23 +1,27 @@
-/* eslint global-require: off, no-console: off, promise/always-return: off */
+/* eslint global-require: off, no-console: off, promise/always-return: off, no-unused-vars: off */
 
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import type { IpcMainInvokeEvent, FileFilter } from 'electron';
 import { readFileSync } from 'fs';
-import electronReady from './event';
+import { mainWindowReady, splashWindowReady } from './event';
 import allClose from './event/allClose';
 import type { OpenMessageDialog } from './types/Main';
 
 let mainWindow: BrowserWindow;
+let splashWindow: BrowserWindow;
 
 app.on('window-all-closed', () => allClose());
 
 (async () => {
     await app.whenReady().catch(console.log);
-    mainWindow = await electronReady();
-    app.on('activate', () => {
-        if (mainWindow === null) electronReady();
+    splashWindow = await splashWindowReady();
+    splashWindow.on('closed', async () => {
+        mainWindow = await mainWindowReady();
+        app.on('activate', () => {
+            if (mainWindow === null) mainWindowReady();
+        });
+        return mainWindow;
     });
-    return mainWindow;
 })();
 
 // FileDialogを起動する関数

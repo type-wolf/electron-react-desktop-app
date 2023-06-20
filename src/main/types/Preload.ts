@@ -1,1 +1,1 @@
-export type Channels = 'openFileDialog' | 'readFileSync' | 'openMessageDialog';
+export type Channels = 'openFileDialog' | 'readFileSync' | 'openMessageDialog' | 'appUpdaterMessage';
