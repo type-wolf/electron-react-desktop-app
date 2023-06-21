@@ -1,5 +1,5 @@
 /* eslint global-require: off, no-console: off, promise/always-return: off */
-import { shell } from 'electron';
+import { app, shell } from 'electron';
 import AppUpdater from './appUpdater';
 import MenuBuilder from '../menus';
 import resolveHtmlPath from '../utils/resolveHtmlPath';
@@ -8,6 +8,7 @@ import createMainWindow from './createWindow';
 import createSplashWindow from './createSplashWindow';
 import readyToShow from './readyToShow';
 import setWindowStore from './close';
+import updateState from '../store/updateState';
 
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
@@ -52,8 +53,13 @@ export const splashWindowReady = async () => {
     splashWindow.once('close', () => setWindowStore(splashWindow));
 
     splashWindow.on('closed', async () => {
-        const mainWindow = await mainWindowReady();
-        return mainWindow;
+        const isShow = updateState.get('isShowMainWindow');
+        if (isShow) {
+            const mainWindow = await mainWindowReady();
+            app.on('activate', () => {
+                if (mainWindow === null) mainWindowReady();
+            });
+        }
     });
 
     splashWindow.webContents.setWindowOpenHandler((edata) => {

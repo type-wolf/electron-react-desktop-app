@@ -15,13 +15,6 @@ app.on('window-all-closed', () => allClose());
 (async () => {
     await app.whenReady().catch(console.log);
     splashWindow = await splashWindowReady();
-    splashWindow.on('closed', async () => {
-        mainWindow = await mainWindowReady();
-        app.on('activate', () => {
-            if (mainWindow === null) mainWindowReady();
-        });
-        return mainWindow;
-    });
 })();
 
 // FileDialogを起動する関数

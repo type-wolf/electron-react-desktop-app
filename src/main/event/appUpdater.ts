@@ -3,6 +3,7 @@
 import type { BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import updateState from '../store/updateState';
 import type { SendStatusToRendererType } from '../types/Events/AppUpdater';
 
 export default class AppUpdater {
@@ -17,6 +18,7 @@ export default class AppUpdater {
         });
         if (process.env.NODE_ENV === 'development') {
             sendStatusToRenderer({ status: 'checking-for-update', data: 'Skip confirmation of update' });
+            updateState.set({ isUpdate: false });
             setTimeout(() => {
                 this.window.hide();
                 this.window.destroy();
@@ -40,6 +42,7 @@ export default class AppUpdater {
         });
         autoUpdater.on('update-not-available', () => {
             sendStatusToRenderer({ status: 'update-not-available', data: 'Starting...' });
+            updateState.set({ isShowMainWindow: true });
             setTimeout(() => {
                 this.window.hide();
                 this.window.destroy();
@@ -50,6 +53,7 @@ export default class AppUpdater {
         });
         autoUpdater.on('update-downloaded', () => {
             sendStatusToRenderer({ status: 'update-downloaded', data: 'Download Complete !' });
+            updateState.set({ isShowMainWindow: false });
             autoUpdater.quitAndInstall();
         });
         autoUpdater.on('error', (err) => {
