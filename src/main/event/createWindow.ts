@@ -1,6 +1,6 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
-import store from '../store/window';
+import windowStore from '../store/window';
 
 const createWindow = () => {
     const RESOURCES_PATH = app.isPackaged
@@ -13,10 +13,10 @@ const createWindow = () => {
 
     const mainWindow = new BrowserWindow({
         show: false,
-        x: store.get('x'),
-        y: store.get('y'),
-        width: store.get('width'),
-        height: store.get('height'),
+        x: windowStore.get('x'),
+        y: windowStore.get('y'),
+        width: windowStore.get('width'),
+        height: windowStore.get('height'),
         icon: getAssetPath('../../icon.png'),
         webPreferences: {
             nodeIntegration: true,

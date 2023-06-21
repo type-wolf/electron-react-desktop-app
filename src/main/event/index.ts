@@ -7,7 +7,7 @@ import installExtensions from './installExtensions';
 import createMainWindow from './createWindow';
 import createSplashWindow from './createSplashWindow';
 import readyToShow from './readyToShow';
-import close from './close';
+import setWindowStore from './close';
 
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
@@ -25,7 +25,7 @@ export const mainWindowReady = async () => {
 
     mainWindow.on('ready-to-show', () => readyToShow(mainWindow));
 
-    mainWindow.once('close', () => close(mainWindow));
+    mainWindow.once('close', () => setWindowStore(mainWindow));
 
     mainWindow.on('closed', () => console.log('closed'));
 
@@ -49,7 +49,12 @@ export const splashWindowReady = async () => {
 
     splashWindow.on('ready-to-show', () => readyToShow(splashWindow));
 
-    splashWindow.once('close', () => close(splashWindow));
+    splashWindow.once('close', () => setWindowStore(splashWindow));
+
+    splashWindow.on('closed', async () => {
+        const mainWindow = await mainWindowReady();
+        return mainWindow;
+    });
 
     splashWindow.webContents.setWindowOpenHandler((edata) => {
         shell.openExternal(edata.url);
