@@ -1,9 +1,9 @@
 import { BrowserWindow } from 'electron';
-import store from '../store/window';
+import windowStore from '../store/window';
 
-const close = (mainWindow: BrowserWindow) => {
+const setWindowStore = (mainWindow: BrowserWindow) => {
     const { x, y, width, height } = mainWindow.getBounds();
-    store.set({ x, y, width, height });
+    windowStore.set({ x, y, width, height });
 };
 
-export default close;
+export default setWindowStore;

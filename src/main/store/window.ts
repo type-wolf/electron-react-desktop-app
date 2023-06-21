@@ -1,13 +1,7 @@
 import Store from 'electron-store';
+import type { WindowStoreType } from 'main/types/Store/Window';
 
-export type WindowType = {
-    x?: number;
-    y?: number;
-    width?: number;
-    height?: number;
-};
-
-const store = new Store<WindowType>({
+const windowStore = new Store<WindowStoreType>({
     configFileMode: 0o666,
     defaults: {
         x: undefined,
@@ -17,4 +11,4 @@ const store = new Store<WindowType>({
     },
 });
 
-export default store;
+export default windowStore;
