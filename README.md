@@ -151,7 +151,7 @@
     - #### Issue a certificate with `.p12` extension for the `Developer InstallerID` and `Developer ApplicationID` you just created in your keychain
 
         ```bash
-        openssl sha1 certificate.p12
+        base64 -i certificate.p12
         ```
 
     - #### Register output results to Github environment variables
