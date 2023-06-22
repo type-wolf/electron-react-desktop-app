@@ -146,9 +146,9 @@
 
     - #### Select Password for App
 
-8. #### Hash the `certificate.p12` file issued by the keychain and register it in the Guthub environment variable with `CSC_LINK`.
+8. #### Hash the `certificate.p12` file issued by the keychain and register it in the Guthub environment variable with `CSC_LINK` and `CSC_INSTALLER_LINK`
 
-    - #### Issue a certificate with `.p12` extension for the `Developer InstallerID` you just created in your keychain
+    - #### Issue a certificate with `.p12` extension for the `Developer InstallerID` and `Developer ApplicationID` you just created in your keychain
 
         ```bash
         openssl sha1 certificate.p12
@@ -156,7 +156,7 @@
 
     - #### Register output results to Github environment variables
 
-9. #### Register the password for `certificate.p12` set in the keychain with `CSC_KEY_PASSWORD` in the Github environment variable
+9. #### Register the password for `certificate.p12` set in the keychain with `CSC_KEY_PASSWORD` and `CSC_INSTALLER_KEY_PASSWORD` in the Github environment variable
 
     - #### Register the password you decided when issuing the certificate (p.12) file in the Github environment variable.
 
