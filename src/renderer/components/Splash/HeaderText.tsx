@@ -13,7 +13,7 @@ const SpalashHeaderText: FC = () => {
         }
     });
     return (
-        <RvSpan fontSize="16px" textColor="white500" marginTop="150px">
+        <RvSpan fontSize="16px" textColor="white500" marginTop="30px">
             {data}
         </RvSpan>
     );
