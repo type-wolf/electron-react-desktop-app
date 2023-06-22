@@ -218,12 +218,12 @@
             ]
         },
         "win": {
-            "publisherName": [
-                "Rui Ito"
-            ],
             "target": [
                 "nsis"
-            ]
+            ],
+            "verifyUpdateCodeSignature": false,
+            "signAndEditExecutable": false,
+            "signDlls": false
         },
         "linux": {
             "target": [
