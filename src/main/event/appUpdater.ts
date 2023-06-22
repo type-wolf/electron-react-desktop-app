@@ -57,6 +57,7 @@ export default class AppUpdater {
             autoUpdater.quitAndInstall();
         });
         autoUpdater.on('error', (err) => {
+            log.error(process.pid, err);
             sendStatusToRenderer({ status: 'error', data: err.message });
         });
     }
