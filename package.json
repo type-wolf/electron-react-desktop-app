@@ -217,15 +217,8 @@
         },
         "win": {
             "target": [
-                {
-                    "target": "nsis",
-                    "arch": [
-                        "x64"
-                    ]
-                }
-            ],
-            "publisherName": "Rui Ito",
-            "verifyUpdateCodeSignature": false
+                "nsis"
+            ]
         },
         "linux": {
             "target": [
