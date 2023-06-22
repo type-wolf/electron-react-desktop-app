@@ -38,7 +38,7 @@ export default class AppUpdater {
             sendStatusToRenderer({ status: 'checking-for-update', data: 'Checking for update...' });
         });
         autoUpdater.on('update-available', (info) => {
-            sendStatusToRenderer({ status: 'update-available', data: info.version });
+            sendStatusToRenderer({ status: 'update-available', data: `New Versions(${info.version}) Found !` });
         });
         autoUpdater.on('update-not-available', () => {
             sendStatusToRenderer({ status: 'update-not-available', data: 'Starting...' });
