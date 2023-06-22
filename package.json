@@ -37,7 +37,9 @@
         "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
         "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
         "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-        "test": "jest"
+        "test": "jest",
+        "test:windows": "SET ENV=windows&& jest",
+        "test:mac": "ENV=mac jest"
     },
     "browserslist": [],
     "prettier": {
@@ -216,6 +218,9 @@
             ]
         },
         "win": {
+            "publisherName": [
+                "Rui Ito"
+            ],
             "target": [
                 "nsis"
             ]
