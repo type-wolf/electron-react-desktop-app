@@ -224,15 +224,8 @@
                     ]
                 }
             ],
-            "extraResources": [
-                {
-                    "from": "build/installers/resources/",
-                    "to": "resources/",
-                    "filter": [
-                        "**/*"
-                    ]
-                }
-            ]
+            "publisherName": "Rui Ito",
+            "verifyUpdateCodeSignature": false
         },
         "linux": {
             "target": [
