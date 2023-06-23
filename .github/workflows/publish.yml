@@ -4,12 +4,11 @@ on:
     push:
         branches:
             - main
-
 jobs:
     publish:
-        env:
-            # Your Env
-            # GH_TOKEN: ${{secrets.GH_TOKEN}}
+        # env:
+        # Your Env
+        # GH_TOKEN: ${{secrets.GH_TOKEN}}
 
         runs-on: ${{ matrix.os }}
 
