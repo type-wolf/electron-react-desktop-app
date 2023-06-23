@@ -219,8 +219,7 @@
         "win": {
             "target": [
                 "nsis"
-            ],
-            "sign": false
+            ]
         },
         "linux": {
             "target": [
