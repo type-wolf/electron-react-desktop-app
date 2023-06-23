@@ -21,6 +21,9 @@ jobs:
                   cache: npm
 
             - name: npm install
+              env:
+                  # Your Env
+                  # GH_TOKEN: ${{secrets.GH_TOKEN}}
               run: |
                   npm install
 

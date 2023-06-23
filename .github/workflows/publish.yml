@@ -7,6 +7,10 @@ on:
 
 jobs:
     publish:
+        env:
+            # Your Env
+            # GH_TOKEN: ${{secrets.GH_TOKEN}}
+
         runs-on: ${{ matrix.os }}
 
         strategy:
@@ -25,9 +29,6 @@ jobs:
 
             - name: Install and build
               run: |
-                  # cat > .env <<EOF
-                  #     GH_TOKEN=${{ secrets.GH_TOKEN }}
-                  # EOF
                   npm install
                   npm run postinstall
                   npm run build

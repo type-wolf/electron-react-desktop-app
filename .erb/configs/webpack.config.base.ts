@@ -59,12 +59,8 @@ const configuration: webpack.Configuration = {
     plugins: [
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'production',
-        }),
-
-        // your env string
-        new webpack.DefinePlugin({
-            'process.type': '"browser"',
-            // 'propcess.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN),
+            // Your Env
+            // GH_TOKEN: process.env.GH_TOKEN as string,
         }),
     ],
 };
