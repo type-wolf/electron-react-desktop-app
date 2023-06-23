@@ -75,10 +75,31 @@
 -   #### Edit [base.ts](.erb/configs/webpack.config.base.ts)
 
     ```typescript
-    new webpack.DefinePlugin({
-        'process.type': '"browser"',
-        'process.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN),
-    }),
+    plugins: [
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: 'production',
+            // Your Env
+            GH_TOKEN: process.env.GH_TOKEN as string,
+        }),
+    ],
+    ```
+
+-   #### Edit [publish.yml](.github/workflows/publish.yml)
+
+    ```yml
+    publish:
+        env:
+            # Your Env
+            GH_TOKEN: ${{secrets.GH_TOKEN}}
+    ```
+
+-   #### Edit [test.yml](.github/workflows/publish.yml)
+
+    ```yml
+    - name: npm install
+      env:
+          # Your Env
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
     ```
 
 -   #### Read .env DevMode
