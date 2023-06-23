@@ -72,12 +72,11 @@
     echo "MONGODB_URI=My MongoDB URI" > .env
     ```
 
--   #### Edit [prod.ts](.erb/configs/webpack.config.main.prod.ts)
+-   #### Edit [base.ts](.erb/configs/webpack.config.base.ts)
 
     ```typescript
     new webpack.DefinePlugin({
         'process.type': '"browser"',
-        'process.env.MONGODB_URI': JSON.stringify(process.env.MONGODB_URI),
         'process.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN),
     }),
     ```
@@ -87,7 +86,7 @@
     ```typescript
     import { config } from 'dotenv';
     config();
-    console.log(process.env.MONGODB_URI);
+    console.log(process.env.GH_TOKEN);
     ```
 
 ### Application Packaging

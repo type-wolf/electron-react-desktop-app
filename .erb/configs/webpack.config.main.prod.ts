@@ -63,13 +63,6 @@ const configuration: webpack.Configuration = {
             DEBUG_PROD: false,
             START_MINIMIZED: false,
         }),
-
-        // your env string
-        new webpack.DefinePlugin({
-            'process.type': '"browser"',
-            // 'propcess.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN),
-            // 'process.env.MONGODB_URI': JSON.stringify('process.env.MONGODB_URI'),
-        }),
     ],
 
     /**
