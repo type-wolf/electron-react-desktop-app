@@ -2,7 +2,6 @@
 
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { GlobalStyle } from 'rvi-system';
 import App from '../../renderer/App';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
@@ -28,13 +27,6 @@ window.ResizeObserver = jest.fn().mockImplementation(() => {
 
 describe('App', () => {
     it('should render', () => {
-        expect(
-            render(
-                <>
-                    <GlobalStyle />
-                    <App />
-                </>
-            )
-        ).toBeTruthy();
+        expect(render(<App />)).toBeTruthy();
     });
 });
