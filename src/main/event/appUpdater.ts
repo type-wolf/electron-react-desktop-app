@@ -7,7 +7,7 @@ import { config } from 'dotenv';
 import updateState from '../store/updateState';
 import type { SendStatusToRendererType } from '../types/Events/AppUpdater';
 
-config({ path: '.env' });
+config();
 
 export default class AppUpdater {
     private window: BrowserWindow;
