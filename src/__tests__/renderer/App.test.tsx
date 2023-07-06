@@ -2,7 +2,9 @@
 
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
+import { ColorModeScript } from '@chakra-ui/react';
 import App from '../../renderer/App';
+import theme from '../../renderer/components/theme';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
     return {
@@ -27,6 +29,14 @@ window.ResizeObserver = jest.fn().mockImplementation(() => {
 
 describe('App', () => {
     it('should render', () => {
-        expect(render(<App />)).toBeTruthy();
+        expect(
+            render(
+                <>
+                    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+
+                    <App />
+                </>
+            )
+        ).toBeTruthy();
     });
 });
