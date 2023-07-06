@@ -1,14 +1,13 @@
 import { createRoot } from 'react-dom/client';
-import { GlobalStyle } from 'rvi-system';
+import { ColorModeScript } from '@chakra-ui/react';
 import App from './App';
+import theme from './components/theme';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 root.render(
     <>
-        <GlobalStyle />
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
     </>
 );
-
-// Main Process
